@@ -20,20 +20,22 @@
 
     <section id="education" class="container">
         <h2>Education</h2>
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Year</th>
-                    <th>Semester</th>
-                    <th>Code</th>
-                    <th>Subject Name</th>
-                    <th>Credit</th>
-                </tr>
-            </thead>
-            <tbody id="course-table"> <!-- Ensure correct ID -->
-                <tr><td colspan="5">Loading courses...</td></tr> <!-- Placeholder -->
-            </tbody>
-        </table>
+        <div class="table-container">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Year</th>
+                        <th>Semester</th>
+                        <th>Code</th>
+                        <th>Subject Name</th>
+                        <th>Credit</th>
+                    </tr>
+                </thead>
+                <tbody id="course-table">
+                    <tr><td colspan="5">Loading courses...</td></tr>
+                </tbody>
+            </table>
+        </div>
     </section>
 
     <footer>
@@ -64,13 +66,29 @@
 
                     data.courses.forEach(course => {
                         let row = document.createElement('tr');
-                        row.innerHTML = `
-                            <td>${course.year_level || 'N/A'}</td>
-                            <td>${course.sem || 'N/A'}</td>
-                            <td>${course.code || 'N/A'}</td>
-                            <td>${course.description || 'N/A'}</td>
-                            <td>${course.credit || 'N/A'}</td>
-                        `;
+                        
+                        // Security: Prevents XSS by using textContent
+                        let year = document.createElement('td');
+                        year.textContent = course.year_level || 'N/A';
+
+                        let sem = document.createElement('td');
+                        sem.textContent = course.sem || 'N/A';
+
+                        let code = document.createElement('td');
+                        code.textContent = course.code || 'N/A';
+
+                        let description = document.createElement('td');
+                        description.textContent = course.description || 'N/A';
+
+                        let credit = document.createElement('td');
+                        credit.textContent = course.credit || 'N/A';
+
+                        row.appendChild(year);
+                        row.appendChild(sem);
+                        row.appendChild(code);
+                        row.appendChild(description);
+                        row.appendChild(credit);
+
                         courseTable.appendChild(row);
                     });
                 })
