@@ -64,8 +64,8 @@
     .then(data => {
         console.log('Fetched Course Data:', data); // Debugging
 
-        const courseTable = document.getElementById('course-table');
-        courseTable.innerHTML = ''; // Clear existing table data
+        const coursesTable = document.getElementById('courses-table');
+        coursesTable.innerHTML = ''; // Clear existing table data
 
         if (!data.courses || data.courses.length === 0) {
             console.error('No courses found in JSON data');
@@ -75,11 +75,11 @@
         data.courses.forEach(course => {
             let row = document.createElement('tr');
             row.innerHTML = `
-                <td>${course.year_level}</td>
-                <td>${course.sem}</td>
-                <td>${course.code}</td>
-                <td>${course.description}</td>
-                <td>${course.credit}</td>
+                <td>${courses.year_level}</td>
+                <td>${courses.sem}</td>
+                <td>${courses.code}</td>
+                <td>${courses.description}</td>
+                <td>${courses.credit}</td>
             `;
             courseTable.appendChild(row);
         });
