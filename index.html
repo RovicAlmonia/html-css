@@ -54,31 +54,38 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        fetch('https://raw.githubusercontent.com/RovicAlmonia/html-css/main/courses.json') // Fixed URL
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then(data => {
-                console.log('Course Data:', data); // Debugging
-                const courseTable = document.getElementById('course-table');
-                courseTable.innerHTML = ''; // Clear table before adding
+        fetch('https://raw.githubusercontent.com/RovicAlmonia/html-css/main/courses.json')
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Fetched Course Data:', data); // Debugging
 
-                data.courses.forEach(course => {
-                    let row = document.createElement('tr');
-                    row.innerHTML = `
-                        <td>${course.year_level}</td>
-                        <td>${course.sem}</td>
-                        <td>${course.code}</td>
-                        <td>${course.description}</td>
-                        <td>${course.credit}</td>
-                    `;
-                    courseTable.appendChild(row);
-                });
-            })
-            .catch(error => console.error('Error fetching courses.json:', error));
+        const courseTable = document.getElementById('course-table');
+        courseTable.innerHTML = ''; // Clear existing table data
+
+        if (!data.courses || data.courses.length === 0) {
+            console.error('No courses found in JSON data');
+            return;
+        }
+
+        data.courses.forEach(course => {
+            let row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${course.year_level}</td>
+                <td>${course.sem}</td>
+                <td>${course.code}</td>
+                <td>${course.description}</td>
+                <td>${course.credit}</td>
+            `;
+            courseTable.appendChild(row);
+        });
+    })
+    .catch(error => console.error('Error fetching courses.json:', error));
+
     </script>
 </body>
 </html>
