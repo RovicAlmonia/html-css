@@ -35,5 +35,33 @@
     <footer>
         <p>I am a footer the last section of this page</p>
     </footer>
+ <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        fetch('https://github.com/bling011/json/blob/main/courses.json')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Course Data:', data); // Debugging
+                const courseTable = document.getElementById('course-table');
+                courseTable.innerHTML = ''; // Clear table before adding
+
+                data.courses.forEach(course => {
+                    let row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${courses.year_level}</td>
+                        <td>${courses.sem}</td>
+                        <td>${courses.code}</td>
+                        <td>${courses.description}</td>
+                        <td>${courses.credit}</td>
+                    `;
+                    courseTable.appendChild(row);
+                });
+            })
+            .catch(error => console.error('Error fetching courses.json:', error));
+    </script>
 </body>
 </html>
