@@ -3,25 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Expected Output</title>
+    <title>Course Table</title>
     <link rel="stylesheet" href="styles.css"> 
 </head>
 <body>
     <header>
-        <p>I am header with an unordered list of hyperlinks</p>
-        <ul>
-            <li><a href="#about">I am About link and my href value is #about</a></li>
-            <li><a href="#education">I am Education link and my href value is #education</a></li>
-            <li><a href="#skills">I am Skills link and my href value is #skills</a></li>
-            <li><a href="#portfolio">I am Portfolio link and my href value is #portfolio</a></li>
-            <li><a href="#contact">I am Contact link and my href value is #contact</a></li>
-        </ul>
+        <nav>
+            <ul>
+                <li><a href="#about">About</a></li>
+                <li><a href="#education">Education</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#portfolio">Portfolio</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
     </header>
 
     <section id="education" class="container">
         <h2>Education</h2>
         <div class="table-container">
-            <table class="table table-striped">
+            <table class="table">
                 <thead>
                     <tr>
                         <th>Year</th>
@@ -39,64 +40,9 @@
     </section>
 
     <footer>
-        <p>I am a footer, the last section of this page</p>
+        <p>&copy; 2024 Course Table. All rights reserved.</p>
     </footer>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const courseTable = document.getElementById('course-table');
-
-            fetch('https://raw.githubusercontent.com/RovicAlmonia/html-css/main/courses.json')
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! Status: ${response.status}`);
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    console.log('Fetched Course Data:', data); // Debugging output
-
-                    courseTable.innerHTML = ''; // Clear placeholder
-
-                    if (!data.courses || data.courses.length === 0) {
-                        console.error('No courses found in JSON data');
-                        courseTable.innerHTML = '<tr><td colspan="5">No courses available</td></tr>';
-                        return;
-                    }
-
-                    data.courses.forEach(course => {
-                        let row = document.createElement('tr');
-                        
-                        // Security: Prevents XSS by using textContent
-                        let year = document.createElement('td');
-                        year.textContent = course.year_level || 'N/A';
-
-                        let sem = document.createElement('td');
-                        sem.textContent = course.sem || 'N/A';
-
-                        let code = document.createElement('td');
-                        code.textContent = course.code || 'N/A';
-
-                        let description = document.createElement('td');
-                        description.textContent = course.description || 'N/A';
-
-                        let credit = document.createElement('td');
-                        credit.textContent = course.credit || 'N/A';
-
-                        row.appendChild(year);
-                        row.appendChild(sem);
-                        row.appendChild(code);
-                        row.appendChild(description);
-                        row.appendChild(credit);
-
-                        courseTable.appendChild(row);
-                    });
-                })
-                .catch(error => {
-                    console.error('Error fetching courses.json:', error);
-                    courseTable.innerHTML = `<tr><td colspan="5">Failed to load courses</td></tr>`;
-                });
-        });
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
